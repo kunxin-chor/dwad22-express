@@ -22,3 +22,5 @@ If using MacOS, you have to write `sudo npm install -g nodemon`
 ```
 yarn add hbs
 ```
+
+9. Create a folder name `views` and that will store all our template files (view files)
