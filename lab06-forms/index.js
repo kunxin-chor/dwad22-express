@@ -15,6 +15,9 @@ app.get("/add-food", function(req,res){
 
 app.post("/add-food", function(req,res){
     console.log(req.body);
+
+ 
+
     // assign default values if none specified in the form (req.body)
     const foodName = req.body.foodName || "none given";
     const calories = req.body.calories || 0;
@@ -32,26 +35,31 @@ app.post("/add-food", function(req,res){
     // if two or more tags selected --> array of many strings
 
     // most straightforward
-    let tags = [];
+    // let tags = [];
 
     // if the user submitted tags is not faslely (i.e not undefined
     // or that the person at least one)
-    if (req.body.tags) {
-        // if the user selects more than one tags
-        // Array is a global variable that all JS files can use
-        // isArray takes in one parameter and returns true if that
-        // parameter is an array
-        if (Array.isArray(req.body.tags)) {
-            tags = req.body.tags;
-        } else {
-            // otherwise, the user has only selected one tag
-            // and therefore req.body.tags is a single string
-            // so we just add it to the empty tags array
-            tags.push(req.body.tags)
-        }
-    }
+    // if (req.body.tags) {
+    //     // if the user selects more than one tags
+    //     // Array is a global variable that all JS files can use
+    //     // isArray takes in one parameter and returns true if that
+    //     // parameter is an array
+    //     if (Array.isArray(req.body.tags)) {
+    //         tags = req.body.tags;
+    //     } else {
+    //         // otherwise, the user has only selected one tag
+    //         // and therefore req.body.tags is a single string
+    //         // so we just add it to the empty tags array
+    //         tags.push(req.body.tags)
+    //     }
+    // }
     // tags is guaranteed to be an array
-    console.log("tags =", tags);
+
+    // let tags = req.body.tags ? req.body.tags : [];
+    // // let tags = req.body.tags || []
+    // tags = Array.isArray(tags) ? tags : [ tags ]
+
+    let tags = req.body.tags ? Array.isArray(req.body.tags ) ? req.body.tags : [req.body.tags] : []
 
 
     res.render("submitted",{
@@ -59,7 +67,7 @@ app.post("/add-food", function(req,res){
         "calories": calories,
         "tags": tags,
         "meal": meal
-    })
+    });
 })
 
 app.listen(3001, function(){
