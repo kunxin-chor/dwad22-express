@@ -1,0 +1,25 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+<h1>Is Holiday?</h1>
+
+{{#if isHoliday}}
+<div class="alert alert-success">
+    Yah can sleep in!
+</div>
+{{else}}
+<div class="alert alert-danger">
+    WAKE UP RIGHT NOW!
+</div>  
+{{/if}}
+
+{{#ifEquals duration 1}}
+    <p>So sad it's only a one-day break</p>
+{{else}}
+    <p>Yah can sleep in for many days</p>
+{{/ifEquals}}
+
+
+{{/block}}
+
+{{/extends}}

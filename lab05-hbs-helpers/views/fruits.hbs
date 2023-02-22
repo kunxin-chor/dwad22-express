@@ -1,0 +1,14 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+<div>
+    My favorite fruits are: 
+    <ul>
+        {{#each fruits}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+</div>
+{{/block}}
+
+{{/extends}}
