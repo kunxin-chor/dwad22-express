@@ -8,6 +8,8 @@
 4. Add the express package by:
 `yarn add express` (make sure that the prompt is in the project directory -- the directory for your node application) or `npm install express`
 
+* Other dependecies will be: `hbs` and `wax-on`
+
 4b. To install yarn, you just type `npm install -g yarn`
 
 5. Don't modify any files in the `node_modules` folder and also make sure it don't go up to .github
