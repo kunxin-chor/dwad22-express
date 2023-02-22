@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Thank you for your submission</h1>
+        This what you have provided
+        <ul>
+            <li>Food Name: {{foodName}}</li>
+            <li>Calories: {{calories}}</li>
+            <li>Meal: {{meal}}</li>
+            <li>Tags: 
+                <ul>
+                    {{#each tags}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+            </li>
+        </ul>
+    </div>
+  </body>
+</html>
