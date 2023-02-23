@@ -85,6 +85,52 @@ app.post("/sightings/create", function(req,res){
     res.redirect("/sightings");
 })
 
+app.get("/sightings/delete/:sighting_id", function(req,res){
+    
+    const recordId = req.params.sighting_id;
+
+    // if there's no foodrecord with the matching sighting_id
+    // default to an empty object
+    let foodRecord = {};
+
+    for (let record of sightings) {
+        if (record.id == recordId) {
+            foodRecord = record;
+            break;
+        }
+    }
+
+    console.log("deleting record", foodRecord);
+    // display a confirmation
+    res.render("confirm-delete", {
+        "foodRecord": foodRecord
+    });
+})
+
+app.post("/sightings/delete/:sighting_id", function(req,res){
+    const recordId = req.params.sighting_id;
+    // find the index of the food record
+    let indexToDelete = -1;
+    for (let i = 0; i < sightings.length; i++) {
+        // if the current sighting record matches the one that we want to delete
+        if (sightings[i].id == recordId) {
+            indexToDelete = i;
+            break;
+        }
+    }
+
+    if (indexToDelete == -1) {
+        res.send("Sorry the record id that you want to delete does not exist")
+    } else {
+        console.log("index to delete =", indexToDelete);
+        
+        sightings.splice(indexToDelete, 1);
+        res.redirect("/sightings");
+    }
+
+
+})
+
 // listen
 // starts the server
 app.listen(3000, function(){

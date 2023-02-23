@@ -10,6 +10,7 @@
             <th>Title</th>
             <th>Cuisine</th>
             <th>Security</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +20,9 @@
             <td>{{this.title}}</td>
             <td>{{this.cuisine}}</td>
             <td>{{this.security}}</td>
+            <td>
+              <a href="/sightings/delete/{{this.id}}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
         </tr>
         {{/each}}
     </tbody>
