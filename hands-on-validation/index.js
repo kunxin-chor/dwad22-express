@@ -41,10 +41,9 @@ app.post("/", function(req,res){
     if (!req.body.vehicle) {
         errors.push("Please select a vehicle");
     }
-
+    let selectedItems= [];
     // checkboxes - empty, one, many
     // ensure we always have an array
-    let selectedItems = [];
     if (req.body.items) {
         if (Array.isArray(req.body.items)) {
             selectedItems = req.body.items;
