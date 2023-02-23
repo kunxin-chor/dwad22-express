@@ -1,0 +1,52 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+<h1>Update sighting: {{record.title}}</h1>
+<form method="POST">
+    <div>
+        <label>Title</label>
+        <input type="text" class="form-control" name="title" value="{{record.title}}"/>
+    </div>
+    <div>
+        <label>Cuisine</label>
+        <select name="cuisine" class="form-control" multiple>
+            <option value="chinese" 
+              {{#inArray record.cuisine "chinese"}}
+              selected
+              {{/inArray}}
+            >Chinese</option>
+            <option value="western"
+            {{#inArray record.cuisine "western"}}
+              selected
+            {{/inArray}}
+            >Western</option>
+            <option value="malay"
+            {{#inArray record.cuisine "malay"}}
+              selected
+              {{/inArray}}
+            >Malay</option>
+            <option value="indian"
+            {{#inArray record.cuisine "indian"}}
+              selected
+            {{/inArray}}
+            >Indian</option>
+            <option value="others"
+            {{#inArray record.cuisine "others"}}
+              selected
+            {{/inArray}}
+            >Others</option>
+        </select>
+    </div>
+    <div>
+        <label>Security</label>
+        <input type="radio" name="security" value="yes" {{#if record.security}} checked {{/if}}/>
+        <label>Yes</label>
+
+        <input type="radio" name="security" value="no" {{#unless record.security}} checked {{/unless}}/>
+        <label>No</label>
+    </div>
+    <input type="submit" class="btn btn-primary mt-3"/>
+</form>
+{{/block}}
+
+{{/extends}}

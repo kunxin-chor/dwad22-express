@@ -18,6 +18,13 @@ app.use(express.urlencoded({
     'extended': false
 }))
 
+// setup handlebars helpers
+require('handlebars-helpers')(
+    {
+        "handlebars": hbs.handlebars
+    }
+)
+
 // global array (meaning: it can be accessed by any
 // route from anywhere)
 const sightings = [
@@ -73,7 +80,7 @@ app.post("/sightings/create", function(req,res){
     const newFoodSighting = {
         "id": recordId,
         "title": title,
-        "security": security,
+        "security": security == "yes",
         "cuisine":cuisine
     }
 
@@ -110,14 +117,18 @@ app.get("/sightings/delete/:sighting_id", function(req,res){
 app.post("/sightings/delete/:sighting_id", function(req,res){
     const recordId = req.params.sighting_id;
     // find the index of the food record
-    let indexToDelete = -1;
-    for (let i = 0; i < sightings.length; i++) {
-        // if the current sighting record matches the one that we want to delete
-        if (sightings[i].id == recordId) {
-            indexToDelete = i;
-            break;
-        }
-    }
+    // let indexToDelete = -1;
+    // for (let i = 0; i < sightings.length; i++) {
+    //     // if the current sighting record matches the one that we want to delete
+    //     if (sightings[i].id == recordId) {
+    //         indexToDelete = i;
+    //         break;
+    //     }
+    // }
+
+    let indexToDelete = sightings.findIndex(function(record){
+        return record.id == recordId;
+    })
 
     if (indexToDelete == -1) {
         res.send("Sorry the record id that you want to delete does not exist")
@@ -127,6 +138,41 @@ app.post("/sightings/delete/:sighting_id", function(req,res){
         sightings.splice(indexToDelete, 1);
         res.redirect("/sightings");
     }
+})
+
+app.get("/sightings/update/:sighting_id", function(req,res){
+    const sightingToUpdateID = req.params.sighting_id;
+    const recordToUpdate = sightings.find(function(record){
+        return record.id == sightingToUpdateID;
+    });
+
+    res.render("update-sighting", {
+        "record": recordToUpdate
+    })
+})
+
+app.post("/sightings/update/:sighting_id", function(req,res){
+    const sightingId = req.params.sighting_id;
+    const indexToUpdate = sightings.findIndex( (record) => record.id == sightingId);
+
+    // const cuisine = req.body.cuisine ? 
+    //                     Array.isArray(req.body.cuisine) ? req.body.cuisine : [req.body.cuisine]
+    //                     : []
+
+
+    let cuisine = req.body.cuisine || [];
+    cuisine = Array.isArray(cuisine) ? cuisine : [ cuisine];
+
+    const updatedSighting = {
+        "id": sightingId,
+        "title": req.body.title,
+        "cuisine": cuisine,
+        "security": req.body.security == "yes"
+    }
+
+    sightings[indexToUpdate] = updatedSighting;
+
+    res.redirect("/sightings");
 
 
 })
