@@ -1,0 +1,32 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+<h1>Create a new sighting</h1>
+<form method="POST">
+    <div>
+        <label>Title</label>
+        <input type="text" class="form-control" name="title"/>
+    </div>
+    <div>
+        <label>Cuisine</label>
+        <select name="cuisine" class="form-control" multiple>
+            <option value="chinese">Chinese</option>
+            <option value="western">Western</option>
+            <option value="malay">Malay</option>
+            <option value="indian">Indian</option>
+            <option value="others">Others</option>
+        </select>
+    </div>
+    <div>
+        <label>Security</label>
+        <input type="radio" name="security" value="yes" checked/>
+        <label>Yes</label>
+
+        <input type="radio" name="security" value="no"/>
+        <label>No</label>
+    </div>
+    <input type="submit" class="btn btn-primary mt-3"/>
+</form>
+{{/block}}
+
+{{/extends}}

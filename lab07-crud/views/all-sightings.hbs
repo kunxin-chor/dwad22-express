@@ -1,0 +1,28 @@
+
+{{#extends "base"}}
+
+{{#block "content"}}
+<a class="btn btn-primary" href="/sightings/create">Add New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Cuisine</th>
+            <th>Security</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each sightings}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.cuisine}}</td>
+            <td>{{this.security}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/block}}
+
+{{/extends}}
