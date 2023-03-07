@@ -1,4 +1,5 @@
 const express = require("express");
+const { ObjectId } = require("mongodb");
 
 // it will look at the .env
 // and copy all the variables from .env
@@ -48,6 +49,7 @@ async function main() {
     // adding a new food sighting ==> adding a new food sighting resource
     // so we use "POST"
     // the url should only contain the resource name, no verbs or action words
+  
     app.post("/food-sighting", async function(req,res){
 
         if (!req.body.title) {
@@ -82,6 +84,72 @@ async function main() {
        
     })
 
+    
+    // retrieve all existing food sighting
+    app.get("/food-sighting", async function(req,res){
+
+        // accessing query strings: 
+        // console.log(req.query);
+        const filter = {};
+
+        // check if req.query.title is a truthy value
+        if (req.query.title) {
+            // add the `title` criteria to the filter object
+            filter.title = {
+                "$regex": req.query.title,
+                "$options": "i"  // turns on case insensitive
+            }
+        }
+
+        if (req.query.food) {
+            filter.food = {
+                "$in": [req.query.food]
+            }
+        }
+  
+        const sightings = await db.collection("sightings").find(filter).toArray();
+         
+        res.json({
+            "sightings": sightings
+        })
+    })
+
+    // modify a document
+    app.put("/food-sighting/:food_id", async function(req,res){
+        
+        // get the ID of the document that we want to change
+        const foodId = req.params.food_id;
+        
+        // the data will in req.body
+        const response = await db.collection("sightings")
+                            .updateOne({
+                                "_id": new ObjectId(foodId)
+                            },{
+                                "$set": {
+                                    "title": req.body.title,
+                                    "food": req.body.food,
+                                    "datetime": new Date(req.body.datetime)
+                                }
+
+                            });
+
+        res.json({
+            "status": response
+        })
+
+
+    })
+
+    app.delete("/food-sighting/:food_id", async function(req,res){
+        const result = await db.collection("sightings").deleteOne({
+            "_id": new ObjectId(req.params.food_id)
+        })
+
+        res.json({
+            "status": "ok",
+            "result": result
+        })
+    });
 
 }
 
