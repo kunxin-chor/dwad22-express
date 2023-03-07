@@ -6,6 +6,10 @@ const { ObjectId } = require("mongodb");
 // into our OS
 require('dotenv').config();
 
+// use consts instead of hard-coded strings
+const COLLECTION = "sightings";
+const DB = "dwad20-free-food-sightings";
+
 const app = express();
 app.use(express.json()); // enable JSON to be send via POST
 
@@ -29,7 +33,7 @@ async function main() {
     // store it in the db variable
     // if we try to use a database that doesn't exist
     // mongo will assume we are creating a database
-     const db = client.db("dwad20-free-food-sightings");
+     const db = client.db(DB);
 
 
     // app.get("/", async function(req,res){
@@ -62,7 +66,7 @@ async function main() {
         }
 
         try {
-            const result = await db.collection("sightings")
+            const result = await db.collection(COLLECTION)
                         .insertOne({
                             "title": req.body.title,
                             "food": req.body.food,
@@ -107,7 +111,7 @@ async function main() {
             }
         }
   
-        const sightings = await db.collection("sightings").find(filter).toArray();
+        const sightings = await db.collection(COLLECTION).find(filter).toArray();
          
         res.json({
             "sightings": sightings
@@ -121,7 +125,7 @@ async function main() {
         const foodId = req.params.food_id;
         
         // the data will in req.body
-        const response = await db.collection("sightings")
+        const response = await db.collection(COLLECTION)
                             .updateOne({
                                 "_id": new ObjectId(foodId)
                             },{
@@ -141,7 +145,7 @@ async function main() {
     })
 
     app.delete("/food-sighting/:food_id", async function(req,res){
-        const result = await db.collection("sightings").deleteOne({
+        const result = await db.collection(COLLECTION).deleteOne({
             "_id": new ObjectId(req.params.food_id)
         })
 
